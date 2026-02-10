@@ -1,7 +1,7 @@
-import { Hono } from "hono";
 import { handle } from "hono/vercel";
+import { createHonoApp } from "../_global/hono";
 
-const app = new Hono().basePath("/api");
+const app = createHonoApp();
 
 app.get("/leads", (c) => {
   return c.json({

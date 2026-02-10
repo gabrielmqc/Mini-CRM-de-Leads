@@ -1,14 +1,12 @@
 import { IContact } from "@/src/application/gateways/IContact";
 import { Contact } from "@/src/domain/entities/Contact";
-import { randomUUID } from "node:crypto";
 
 export class InMemoryContactRepository implements IContact {
   private contacts: Contact[] = [];
 
   async create(contact: Contact): Promise<Contact> {
-    const newContact = { ...contact, id: randomUUID() };
-    this.contacts.push(newContact);
-    return newContact;
+    this.contacts.push(contact);
+    return contact;
   }
 
   async update(id: string, contact: Contact): Promise<Contact> {
