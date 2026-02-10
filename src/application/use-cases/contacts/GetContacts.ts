@@ -9,7 +9,6 @@ export class GetContacts {
   constructor(private repo: IContact) {}
 
   async execute(input: Input): Promise<Contact[]> {
-    console.log("Executing GetContacts", input.query);
     if (!input.query) {
       return this.repo.findAll();
     }

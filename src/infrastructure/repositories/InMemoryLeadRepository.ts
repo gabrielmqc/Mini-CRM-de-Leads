@@ -29,7 +29,9 @@ export class InMemoryLeadRepository implements ILead {
   async findByContactId(contactId: string): Promise<Lead[]> {
     return this.leads.filter((l) => l.contactId === contactId);
   }
-
+  async findById(id: string): Promise<Lead | null> {
+    return this.leads.find((l) => l.id === id) || null;
+  }
   async findByStatus(status?: LeadStatus): Promise<Lead[]> {
     return this.leads.filter((l) => l.status === status);
   }

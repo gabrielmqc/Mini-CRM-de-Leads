@@ -31,7 +31,9 @@ export class InMemoryContactRepository implements IContact {
       c.name.toLowerCase().includes(name.toLowerCase()),
     );
   }
-
+  async findById(id: string): Promise<Contact | null> {
+    return this.contacts.find((c) => c.id === id) || null;
+  }
   async findByEmail(email: string): Promise<Contact[]> {
     return this.contacts.filter((c) =>
       c.email.toLowerCase().includes(email.toLowerCase()),
