@@ -5,7 +5,10 @@ import {
   updateContactSchema,
 } from "@/src/validation/contact.schema";
 
-import { createLeadSchema } from "@/src/validation/lead.schema";
+import {
+  createLeadSchema,
+  updateLeadSchema,
+} from "@/src/validation/lead.schema";
 import {
   makeCreateContact,
   makeGetContacts,
@@ -14,6 +17,7 @@ import {
 import {
   makeCreateLead,
   makeGetLeads,
+  makeUpdateLead,
 } from "@/src/infrastructure/DI/leadUseCases";
 
 const app = createHonoApp();
@@ -71,8 +75,25 @@ app.post("/leads", async (c) => {
 app.get("/leads", async (c) => {
   const search = c.req.query("search");
   const status = c.req.query("status");
+
   const leads = await makeGetLeads().execute({ query: search, status: status });
   return c.json(leads);
+});
+
+app.put("/leads/:id", async (c) => {
+  const id = c.req.param("id");
+  const body = await c.req.json();
+  if (!id) {
+    return c.json({ error: "Missing ID" }, 400);
+  }
+  const parsed = updateLeadSchema.safeParse(body);
+  if (!parsed.success) {
+    return c.json({ errors: parsed.error.format() }, 400);
+  }
+
+  const contact = await makeUpdateLead().execute({ id, ...parsed.data });
+
+  return c.json(contact, 200);
 });
 
 export const GET = handle(app);

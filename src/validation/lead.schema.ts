@@ -9,8 +9,6 @@ export const createLeadSchema = z.object({
 });
 
 export const updateLeadSchema = z.object({
-  contactId: z.uuid().optional(),
   name: z.string().min(2).optional(),
   company: z.string().min(2).optional(),
-  status: z.enum(LeadStatus).optional(),
 });
