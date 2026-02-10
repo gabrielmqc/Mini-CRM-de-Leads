@@ -1,5 +1,5 @@
 import { ILead } from "@/src/application/gateways/ILead";
-import { Lead, LeadStatus } from "@/src/domain/entities/Lead";
+import { Lead } from "@/src/domain/entities/Lead";
 
 export class InMemoryLeadRepository implements ILead {
   private leads: Lead[] = [];
@@ -32,12 +32,16 @@ export class InMemoryLeadRepository implements ILead {
   async findById(id: string): Promise<Lead | null> {
     return this.leads.find((l) => l.id === id) || null;
   }
-  async search(query: string, status?: LeadStatus): Promise<Lead[]> {
-    return this.leads.filter(
-      (l) =>
-        l.name.toLowerCase().includes(query.toLowerCase()) &&
-        (!status || l.status === status) &&
-        l.status.toLowerCase().includes(query.toLowerCase()),
-    );
+  async search(query: string, status?: string): Promise<Lead[]> {
+    const q = query.toLowerCase();
+    console.log(`Searching for "${query}" with status ${status}`);
+    return this.leads.filter((l) => {
+      const matchesQuery =
+        l.name.toLowerCase().includes(q) || l.company.toLowerCase().includes(q);
+
+      const matchesStatus = status ? l.status === status : true;
+
+      return matchesQuery && matchesStatus;
+    });
   }
 }

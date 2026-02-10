@@ -1,12 +1,10 @@
 import { CreateContact } from "@/src/application/use-cases/contacts/CreateContact";
 import { GetContacts } from "@/src/application/use-cases/contacts/GetContacts";
 import { UpdateContact } from "@/src/application/use-cases/contacts/UpdateContact";
-import { InMemoryContactRepository } from "../repositories/InMemoryContactRepository";
+import { repositories } from "./container";
 
-const contactRepo = new InMemoryContactRepository();
+export const makeCreateContact = () => new CreateContact(repositories.contact);
 
-export const makeCreateContact = () => new CreateContact(contactRepo);
+export const makeGetContacts = () => new GetContacts(repositories.contact);
 
-export const makeGetContacts = () => new GetContacts(contactRepo);
-
-export const makeUpdateContact = () => new UpdateContact(contactRepo);
+export const makeUpdateContact = () => new UpdateContact(repositories.contact);

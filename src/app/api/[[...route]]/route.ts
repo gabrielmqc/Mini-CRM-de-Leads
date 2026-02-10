@@ -70,7 +70,8 @@ app.post("/leads", async (c) => {
 
 app.get("/leads", async (c) => {
   const search = c.req.query("search");
-  const leads = await makeGetLeads().execute({ query: search });
+  const status = c.req.query("status");
+  const leads = await makeGetLeads().execute({ query: search, status: status });
   return c.json(leads);
 });
 

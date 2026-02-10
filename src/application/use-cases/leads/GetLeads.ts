@@ -14,6 +14,6 @@ export class GetLeads {
       return this.repo.findAll();
     }
 
-    return this.repo.search(input.query.trim());
+    return this.repo.search(input.query.trim(), input.status?.trim());
   }
 }

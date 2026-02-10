@@ -27,6 +27,7 @@ export class InMemoryContactRepository implements IContact {
   }
 
   async findById(id: string): Promise<Contact | null> {
+    console.log(`Finding contact with id ${id}`);
     return this.contacts.find((c) => c.id === id) || null;
   }
   async search(query: string): Promise<Contact[]> {

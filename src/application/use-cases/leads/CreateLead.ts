@@ -17,6 +17,7 @@ export class CreateLead {
   ) {}
 
   async execute(input: Input): Promise<Lead> {
+    console.log(input.contactId);
     const contact = await this.contactRepo.findById(input.contactId);
     if (!contact) throw new Error("Contact not found");
 
