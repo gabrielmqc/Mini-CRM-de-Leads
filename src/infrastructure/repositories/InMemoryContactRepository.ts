@@ -26,17 +26,15 @@ export class InMemoryContactRepository implements IContact {
     return this.contacts;
   }
 
-  async findByName(name: string): Promise<Contact[]> {
-    return this.contacts.filter((c) =>
-      c.name.toLowerCase().includes(name.toLowerCase()),
-    );
-  }
   async findById(id: string): Promise<Contact | null> {
     return this.contacts.find((c) => c.id === id) || null;
   }
-  async findByEmail(email: string): Promise<Contact[]> {
-    return this.contacts.filter((c) =>
-      c.email.toLowerCase().includes(email.toLowerCase()),
+  async search(query: string): Promise<Contact[]> {
+    const q = query.toLowerCase();
+
+    return this.contacts.filter(
+      (c) =>
+        c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q),
     );
   }
 }
