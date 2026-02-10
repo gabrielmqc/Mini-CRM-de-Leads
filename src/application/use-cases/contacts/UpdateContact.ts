@@ -8,7 +8,7 @@ interface Input {
   phone?: string;
 }
 
-export class CreateContact {
+export class UpdateContact {
   constructor(private repo: IContact) {}
 
   async execute(input: Input): Promise<Contact> {
