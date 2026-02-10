@@ -1,21 +1,22 @@
 import { handle } from "hono/vercel";
 import { createHonoApp } from "../_global/hono";
-import { InMemoryContactRepository } from "@/src/infrastructure/repositories/InMemoryContactRepository";
 import {
   createContactSchema,
   updateContactSchema,
 } from "@/src/validation/contact.schema";
-import { CreateContact } from "@/src/application/use-cases/contacts/CreateContact";
-import { GetContacts } from "@/src/application/use-cases/contacts/GetContacts";
-import { UpdateContact } from "@/src/application/use-cases/contacts/UpdateContact";
-import { InMemoryLeadRepository } from "@/src/infrastructure/repositories/InMemoryLeadRepository";
+
 import { createLeadSchema } from "@/src/validation/lead.schema";
-import { CreateLead } from "@/src/application/use-cases/leads/CreateLead";
+import {
+  makeCreateContact,
+  makeGetContacts,
+  makeUpdateContact,
+} from "@/src/infrastructure/DI/contactUseCases";
+import {
+  makeCreateLead,
+  makeGetLeads,
+} from "@/src/infrastructure/DI/leadUseCases";
 
 const app = createHonoApp();
-
-const contactRepo = new InMemoryContactRepository();
-const leadRepo = new InMemoryLeadRepository();
 
 app.post("/contacts", async (c) => {
   const body = await c.req.json();
@@ -25,16 +26,14 @@ app.post("/contacts", async (c) => {
     return c.json({ errors: parsed.error.format() }, 400);
   }
 
-  const useCase = new CreateContact(contactRepo);
-  const contact = await useCase.execute(parsed.data);
+  const contact = await makeCreateContact().execute(parsed.data);
 
   return c.json(contact, 201);
 });
 
 app.get("/contacts", async (c) => {
   const search = c.req.query("search");
-  const useCase = new GetContacts(contactRepo);
-  const contacts = await useCase.execute({ query: search });
+  const contacts = await makeGetContacts().execute({ query: search });
   return c.json(contacts);
 });
 
@@ -49,8 +48,7 @@ app.put("/contacts/:id", async (c) => {
     return c.json({ errors: parsed.error.format() }, 400);
   }
 
-  const useCase = new UpdateContact(contactRepo);
-  const contact = await useCase.execute({ id, ...parsed.data });
+  const contact = await makeUpdateContact().execute({ id, ...parsed.data });
 
   return c.json(contact, 200);
 });
@@ -65,10 +63,15 @@ app.post("/leads", async (c) => {
     return c.json({ errors: parsed.error.format() }, 400);
   }
 
-  const useCase = new CreateLead(leadRepo, contactRepo);
-  const contact = await useCase.execute(parsed.data);
+  const contact = await makeCreateLead().execute(parsed.data);
 
   return c.json(contact, 201);
+});
+
+app.get("/leads", async (c) => {
+  const search = c.req.query("search");
+  const leads = await makeGetLeads().execute({ query: search });
+  return c.json(leads);
 });
 
 export const GET = handle(app);
