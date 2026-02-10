@@ -7,9 +7,10 @@ export interface Lead {
   createdAt: string; // ISO date
 }
 
-export type LeadStatus =
-  | "novo"
-  | "contactado"
-  | "qualificado"
-  | "convertido"
-  | "perdido";
+export enum LeadStatus {
+  Novo = "novo",
+  Contactado = "contactado",
+  Qualificado = "qualificado",
+  Convertido = "convertido",
+  Perdido = "perdido",
+}
