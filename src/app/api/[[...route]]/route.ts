@@ -8,10 +8,14 @@ import {
 import { CreateContact } from "@/src/application/use-cases/contacts/CreateContact";
 import { GetContacts } from "@/src/application/use-cases/contacts/GetContacts";
 import { UpdateContact } from "@/src/application/use-cases/contacts/UpdateContact";
+import { InMemoryLeadRepository } from "@/src/infrastructure/repositories/InMemoryLeadRepository";
+import { createLeadSchema } from "@/src/validation/lead.schema";
+import { CreateLead } from "@/src/application/use-cases/leads/CreateLead";
 
 const app = createHonoApp();
 
 const contactRepo = new InMemoryContactRepository();
+const leadRepo = new InMemoryLeadRepository();
 
 app.post("/contacts", async (c) => {
   const body = await c.req.json();
@@ -49,6 +53,22 @@ app.put("/contacts/:id", async (c) => {
   const contact = await useCase.execute({ id, ...parsed.data });
 
   return c.json(contact, 200);
+});
+
+//======= Rotas para Leads ========
+
+app.post("/leads", async (c) => {
+  const body = await c.req.json();
+
+  const parsed = createLeadSchema.safeParse(body);
+  if (!parsed.success) {
+    return c.json({ errors: parsed.error.format() }, 400);
+  }
+
+  const useCase = new CreateLead(leadRepo, contactRepo);
+  const contact = await useCase.execute(parsed.data);
+
+  return c.json(contact, 201);
 });
 
 export const GET = handle(app);

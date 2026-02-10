@@ -32,7 +32,12 @@ export class InMemoryLeadRepository implements ILead {
   async findById(id: string): Promise<Lead | null> {
     return this.leads.find((l) => l.id === id) || null;
   }
-  async findByStatus(status?: LeadStatus): Promise<Lead[]> {
-    return this.leads.filter((l) => l.status === status);
+  async search(query: string, status?: LeadStatus): Promise<Lead[]> {
+    return this.leads.filter(
+      (l) =>
+        l.name.toLowerCase().includes(query.toLowerCase()) &&
+        (!status || l.status === status) &&
+        l.status.toLowerCase().includes(query.toLowerCase()),
+    );
   }
 }
