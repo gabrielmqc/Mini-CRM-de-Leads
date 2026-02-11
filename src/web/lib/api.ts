@@ -1,7 +1,6 @@
 import { Contact, Lead, LeadStatus } from "../@types";
 
-const API_BASE_URL =
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
+const API_BASE_URL = "http://localhost:3000/api";
 
 export async function getContacts(search?: string): Promise<Contact[]> {
   const url = new URL(`${API_BASE_URL}/contacts`);
