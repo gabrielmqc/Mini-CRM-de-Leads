@@ -1,9 +1,4 @@
-import {
-  Contact,
-  Lead,
-  LEAD_STATUS_COLORS,
-  LEAD_STATUS_LABELS,
-} from "../../@types";
+import { Contact, Lead } from "../../@types";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import ContactForm from "../../components/ContactForm";
 import Header from "../../components/Header";

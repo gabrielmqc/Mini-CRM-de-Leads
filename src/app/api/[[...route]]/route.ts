@@ -11,13 +11,16 @@ import {
 } from "@/src/validation/lead.schema";
 import {
   makeCreateContact,
+  makeDeleteContact,
   makeGetContacts,
   makeUpdateContact,
 } from "@/src/infrastructure/DI/contactUseCases";
 import {
   makeChangeLeadStatus,
   makeCreateLead,
+  makeDeleteLead,
   makeGetLeads,
+  makeGetLeadsByContact,
   makeUpdateLead,
 } from "@/src/infrastructure/DI/leadUseCases";
 import z from "zod";
@@ -60,6 +63,16 @@ app.put("/contacts/:id", async (c) => {
   return c.json(contact, 200);
 });
 
+app.delete("/contacts/:id", async (c) => {
+  const id = c.req.param("id");
+  if (!id) {
+    return c.json({ error: "Missing ID" }, 400);
+  }
+  const contact = await makeDeleteContact().execute({ id });
+
+  return c.json(contact, 200);
+});
+
 //======= Rotas para Leads ========
 
 app.post("/leads", async (c) => {
@@ -83,6 +96,17 @@ app.get("/leads", async (c) => {
   return c.json(leads);
 });
 
+app.get("/contacts/:contactId/leads", async (c) => {
+  const contactId = c.req.param("contactId");
+  if (!contactId) {
+    return c.json({ error: "Missing contactId" }, 400);
+  }
+  const leads = await makeGetLeadsByContact().execute({
+    contactId,
+  });
+  return c.json(leads);
+});
+
 app.put("/leads/:id", async (c) => {
   const id = c.req.param("id");
   const body = await c.req.json();
@@ -99,7 +123,7 @@ app.put("/leads/:id", async (c) => {
   return c.json(contact, 200);
 });
 
-app.patch("/leads/:id/status", async (c) => {
+app.patch("/leads/:id/:status", async (c) => {
   const id = c.req.param("id");
   const status = c.req.param("status");
   if (!status) {
@@ -114,6 +138,16 @@ app.patch("/leads/:id/status", async (c) => {
     id,
     status: statusParsed.data,
   });
+
+  return c.json(contact, 200);
+});
+
+app.delete("/leads/:id", async (c) => {
+  const id = c.req.param("id");
+  if (!id) {
+    return c.json({ error: "Missing ID" }, 400);
+  }
+  const contact = await makeDeleteLead().execute({ id });
 
   return c.json(contact, 200);
 });

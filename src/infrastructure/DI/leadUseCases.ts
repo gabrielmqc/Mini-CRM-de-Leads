@@ -3,6 +3,8 @@ import { GetLeads } from "@/src/application/use-cases/leads/GetLeads";
 import { repositories } from "./container";
 import { UpdateLead } from "@/src/application/use-cases/leads/UpdateLeads";
 import { ChangeLeadStatus } from "@/src/application/use-cases/leads/ChangeLeadStatus";
+import { DeleteLead } from "@/src/application/use-cases/leads/DeleteLead";
+import { GetLeadsByContact } from "@/src/application/use-cases/leads/GetLeadsByContact";
 
 export const makeCreateLead = () =>
   new CreateLead(repositories.lead, repositories.contact);
@@ -13,3 +15,8 @@ export const makeUpdateLead = () => new UpdateLead(repositories.lead);
 
 export const makeChangeLeadStatus = () =>
   new ChangeLeadStatus(repositories.lead);
+
+export const makeDeleteLead = () => new DeleteLead(repositories.lead);
+
+export const makeGetLeadsByContact = () =>
+  new GetLeadsByContact(repositories.lead);

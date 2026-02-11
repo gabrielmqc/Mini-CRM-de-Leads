@@ -10,10 +10,17 @@ export class GetLeads {
   constructor(private repo: ILead) {}
 
   async execute(input: Input): Promise<Lead[]> {
-    if (!input.query?.trim()) {
+    const query = input.query?.trim();
+    const status = input.status?.trim();
+
+    if (!query && !status) {
       return this.repo.findAll();
     }
 
-    return this.repo.search(input.query.trim(), input.status?.trim());
+    if (!query) {
+      return this.repo.search("", status);
+    }
+
+    return this.repo.search(query, status);
   }
 }

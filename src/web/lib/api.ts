@@ -3,7 +3,6 @@ import { Contact, Lead, LeadStatus } from "../@types";
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000/api";
 
-// Contacts
 export async function getContacts(search?: string): Promise<Contact[]> {
   const url = new URL(`${API_BASE_URL}/contacts`);
   if (search) url.searchParams.set("search", search);
@@ -21,8 +20,7 @@ export async function createContact(
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify(data),
   });
-  console.log(response);
-  console.log(data);
+
   if (!response.ok) {
     const error = await response.json();
     throw new Error(error.message || "Erro ao criar contato");
@@ -60,7 +58,6 @@ export async function deleteContact(id: string): Promise<void> {
   }
 }
 
-// Leads
 export async function getLeads(
   search?: string,
   status?: LeadStatus,
@@ -68,7 +65,7 @@ export async function getLeads(
   const url = new URL(`${API_BASE_URL}/leads`);
   if (search) url.searchParams.set("search", search);
   if (status) url.searchParams.set("status", status);
-
+  console.log(url.toString());
   const response = await fetch(url.toString());
   if (!response.ok) throw new Error("Erro ao buscar leads");
   return response.json();
