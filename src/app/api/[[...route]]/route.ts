@@ -15,10 +15,13 @@ import {
   makeUpdateContact,
 } from "@/src/infrastructure/DI/contactUseCases";
 import {
+  makeChangeLeadStatus,
   makeCreateLead,
   makeGetLeads,
   makeUpdateLead,
 } from "@/src/infrastructure/DI/leadUseCases";
+import z from "zod";
+import { LeadStatus } from "@/src/domain/entities/Lead";
 
 const app = createHonoApp();
 
@@ -92,6 +95,25 @@ app.put("/leads/:id", async (c) => {
   }
 
   const contact = await makeUpdateLead().execute({ id, ...parsed.data });
+
+  return c.json(contact, 200);
+});
+
+app.patch("/leads/:id/status", async (c) => {
+  const id = c.req.param("id");
+  const status = c.req.param("status");
+  if (!status) {
+    return c.json({ error: "Missing Status" }, 400);
+  }
+  const statusParsed = z.enum(LeadStatus).safeParse(status);
+  if (!statusParsed.success) {
+    return c.json({ errors: statusParsed.error.format() }, 400);
+  }
+
+  const contact = await makeChangeLeadStatus().execute({
+    id,
+    status: statusParsed.data,
+  });
 
   return c.json(contact, 200);
 });
