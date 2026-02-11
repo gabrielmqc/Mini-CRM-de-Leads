@@ -1,30 +1,29 @@
 import { handle } from "hono/vercel";
 import { createHonoApp } from "../_global/hono";
-import {
-  createContactSchema,
-  updateContactSchema,
-} from "@/src/validation/contact.schema";
-
-import {
-  createLeadSchema,
-  updateLeadSchema,
-} from "@/src/validation/lead.schema";
+import { LeadStatus } from "@/src/api/domain/entities/Lead";
 import {
   makeCreateContact,
-  makeDeleteContact,
   makeGetContacts,
   makeUpdateContact,
-} from "@/src/infrastructure/DI/contactUseCases";
+  makeDeleteContact,
+} from "@/src/api/infrastructure/DI/contactUseCases";
 import {
-  makeChangeLeadStatus,
   makeCreateLead,
-  makeDeleteLead,
   makeGetLeads,
   makeGetLeadsByContact,
   makeUpdateLead,
-} from "@/src/infrastructure/DI/leadUseCases";
+  makeChangeLeadStatus,
+  makeDeleteLead,
+} from "@/src/api/infrastructure/DI/leadUseCases";
+import {
+  createContactSchema,
+  updateContactSchema,
+} from "@/src/api/validation/contact.schema";
+import {
+  createLeadSchema,
+  updateLeadSchema,
+} from "@/src/api/validation/lead.schema";
 import z from "zod";
-import { LeadStatus } from "@/src/domain/entities/Lead";
 
 const app = createHonoApp();
 

@@ -1,5 +1,5 @@
+import { Lead } from "@/src/api/domain/entities/Lead";
 import { ILead } from "../../gateways/ILead";
-import { Lead } from "@/src/domain/entities/Lead";
 
 interface Input {
   query?: string;

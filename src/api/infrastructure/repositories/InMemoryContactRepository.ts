@@ -1,5 +1,5 @@
-import { IContact } from "@/src/application/gateways/IContact";
-import { Contact } from "@/src/domain/entities/Contact";
+import { IContact } from "../../application/gateways/IContact";
+import { Contact } from "../../domain/entities/Contact";
 
 export class InMemoryContactRepository implements IContact {
   private contacts: Contact[] = [];

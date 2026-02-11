@@ -1,5 +1,5 @@
+import { Contact } from "@/src/api/domain/entities/Contact";
 import { IContact } from "../../gateways/IContact";
-import { Contact } from "@/src/domain/entities/Contact";
 
 interface Input {
   id: string;

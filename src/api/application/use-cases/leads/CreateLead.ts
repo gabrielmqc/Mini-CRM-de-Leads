@@ -1,7 +1,7 @@
 import { randomUUID } from "crypto";
 import { ILead } from "../../gateways/ILead";
-import { Lead, LeadStatus } from "@/src/domain/entities/Lead";
 import { IContact } from "../../gateways/IContact";
+import { Lead, LeadStatus } from "@/src/api/domain/entities/Lead";
 
 interface Input {
   contactId: string;

@@ -1,10 +1,10 @@
-import { CreateLead } from "@/src/application/use-cases/leads/CreateLead";
-import { GetLeads } from "@/src/application/use-cases/leads/GetLeads";
+import { ChangeLeadStatus } from "../../application/use-cases/leads/ChangeLeadStatus";
+import { CreateLead } from "../../application/use-cases/leads/CreateLead";
+import { DeleteLead } from "../../application/use-cases/leads/DeleteLead";
+import { GetLeads } from "../../application/use-cases/leads/GetLeads";
+import { GetLeadsByContact } from "../../application/use-cases/leads/GetLeadsByContact";
+import { UpdateLead } from "../../application/use-cases/leads/UpdateLeads";
 import { repositories } from "./container";
-import { UpdateLead } from "@/src/application/use-cases/leads/UpdateLeads";
-import { ChangeLeadStatus } from "@/src/application/use-cases/leads/ChangeLeadStatus";
-import { DeleteLead } from "@/src/application/use-cases/leads/DeleteLead";
-import { GetLeadsByContact } from "@/src/application/use-cases/leads/GetLeadsByContact";
 
 export const makeCreateLead = () =>
   new CreateLead(repositories.lead, repositories.contact);

@@ -1,4 +1,4 @@
-import { Contact } from "@/src/domain/entities/Contact";
+import { Contact } from "../../domain/entities/Contact";
 import { IAbstractCrud } from "./IAbstractCrud";
 
 export interface IContact extends IAbstractCrud<Contact> {

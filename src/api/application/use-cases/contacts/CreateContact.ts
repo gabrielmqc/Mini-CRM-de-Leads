@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
 import { IContact } from "../../gateways/IContact";
-import { Contact } from "@/src/domain/entities/Contact";
+import { Contact } from "@/src/api/domain/entities/Contact";
 
 interface Input {
   name: string;

@@ -1,5 +1,5 @@
-import { ILead } from "@/src/application/gateways/ILead";
-import { Lead } from "@/src/domain/entities/Lead";
+import { ILead } from "../../application/gateways/ILead";
+import { Lead } from "../../domain/entities/Lead";
 
 export class InMemoryLeadRepository implements ILead {
   private leads: Lead[] = [];

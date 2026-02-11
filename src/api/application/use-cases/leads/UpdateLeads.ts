@@ -1,13 +1,13 @@
-import { Lead, LeadStatus } from "@/src/domain/entities/Lead";
-
+import { Lead } from "@/src/api/domain/entities/Lead";
 import { ILead } from "../../gateways/ILead";
 
 interface Input {
   id: string;
-  status: LeadStatus;
+  name?: string;
+  company?: string;
 }
 
-export class ChangeLeadStatus {
+export class UpdateLead {
   constructor(private repo: ILead) {}
 
   async execute(input: Input): Promise<Lead> {
@@ -17,7 +17,13 @@ export class ChangeLeadStatus {
       throw new Error("Lead not found");
     }
 
-    existingLead.status = input.status;
+    if (input.name) {
+      existingLead.name = input.name;
+    }
+
+    if (input.company) {
+      existingLead.company = input.company;
+    }
 
     await this.repo.update(existingLead.id, existingLead);
     return existingLead;

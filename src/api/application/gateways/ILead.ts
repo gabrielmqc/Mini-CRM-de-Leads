@@ -1,5 +1,5 @@
+import { Lead } from "../../domain/entities/Lead";
 import { IAbstractCrud } from "./IAbstractCrud";
-import { Lead } from "@/src/domain/entities/Lead";
 
 export interface ILead extends IAbstractCrud<Lead> {
   findByContactId(contactId: string): Promise<Lead[]>;
