@@ -1,40 +1,48 @@
-# 📊 CRM de Leads
+🚀 CRM de leads
 
-> Aplicação Full Stack desenvolvida com **Next.js**, utilizando **Node.js 24** e **Yarn** como gerenciador de dependências.
+Aplicação Full Stack desenvolvida com Next.js, utilizando Node.js 24 e Yarn como gerenciador de dependências.
 
-![Status](https://img.shields.io/badge/status-ativo-brightgreen)
-![Node](https://img.shields.io/badge/node-24.x-green)
-![Next.js](https://img.shields.io/badge/next.js-latest-black)
-![License](https://img.shields.io/badge/license-MIT-blue)
-
----
-
-## 📋 Índice
-
-- [Pré-requisitos](#pré-requisitos)
-- [Instalação](#instalação)
-- [Como Rodar](#como-rodar)
-- [Build para Produção](#build-para-produção)
-- [Observações Importantes](#observações-importantes)
-
----
-
-## 🔧 Pré-requisitos
+📋 Pré-requisitos
 
 Antes de rodar o projeto, você precisa ter instalado:
 
-| Requisito | Versão | Como Verificar |
-|-----------|--------|----------------|
-| **Node.js** | 24.x | `node -v` |
-| **Yarn** | Latest | `yarn -v` |
-| **Git** | Latest | `git -v` |
+Node.js 24.x
 
----
+Yarn (também funciona com outros gerenciadores de dependências)
 
-## 📦 Instalação
+Git
 
-### 1️⃣ Clonar o repositório
+Para verificar as versões:
 
-```bash
+node -v
+
+📦 Clonando o repositório
 git clone https://github.com/gabrielmqc/Mini-CRM-de-Leads.git
-cd Mini-CRM-de-Leads
+
+⚙️ Instalação das dependências
+
+Como o projeto foi desenvolvido com Yarn:
+
+yarn install
+
+
+▶️ Rodando em ambiente de desenvolvimento
+yarn dev
+
+
+A aplicação estará disponível em:
+
+http://localhost:3000
+
+🏗️ Build para produção
+yarn build
+
+🚀 Rodando em produção
+yarn start
+
+
+📌 Observações
+
+Certifique-se de utilizar Node 24, pois versões anteriores podem gerar incompatibilidades.
+
+O projeto utiliza Yarn como gerenciador de dependências — evite misturar com npm.
