@@ -1,9 +1,9 @@
 import { Contact, Lead } from "../../@types";
 import ConfirmDialog from "../../components/ConfirmDialog";
-import ContactForm from "../../components/ContactForm";
 import Header from "../../components/Header";
 import LoadingSpinner from "../../components/LoadingSpinner";
 import Modal from "../../components/Modal";
+import ContactForm from "./ContactForm";
 import ContactsTable from "./ContactsTable";
 import SearchAndActions from "./Search";
 import ViewLeadsModal from "./ViewLeadsModal";

@@ -1,9 +1,9 @@
 import { Lead, LeadStatus, Contact } from "../../@types";
 import ConfirmDialog from "../../components/ConfirmDialog";
 import Header from "../../components/Header";
-import LeadForm from "../../components/LeadForm";
 import Modal from "../../components/Modal";
 import FiltersAndActions from "./Filter";
+import LeadForm from "./LeadForm";
 import LeadsTable from "./LeadsTable";
 import StatusTabs from "./StatusTabs";
 
@@ -27,6 +27,7 @@ interface LeadsTemplateProps {
   handleDeleteLead: () => Promise<void>;
   getContactName: (contactId: string) => string;
   formatDate: (dateString: string) => string;
+  handleChangeStatus: (leadId: string, status: LeadStatus) => Promise<void>;
 }
 
 export default function LeadsTemplate({
@@ -48,7 +49,9 @@ export default function LeadsTemplate({
   handleDeleteLead,
   getContactName,
   formatDate,
+  handleChangeStatus,
 }: LeadsTemplateProps) {
+  console.log("editingLead", editingLead);
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       <Header title="Leads" subtitle="Gerencie seus leads e oportunidades" />
@@ -73,7 +76,23 @@ export default function LeadsTemplate({
         getContactName={getContactName}
         onEdit={setEditingLead}
         onDelete={setDeletingLead}
+        onChangeStatus={handleChangeStatus}
       />
+
+      <Modal
+        isOpen={!!editingLead}
+        onClose={() => setEditingLead(null)}
+        title="Editar Lead"
+      >
+        {editingLead && (
+          <LeadForm
+            lead={editingLead}
+            isEditing={true} // Passa isEditing como true
+            onSubmit={handleUpdateLead}
+            onCancel={() => setEditingLead(null)}
+          />
+        )}
+      </Modal>
 
       <Modal
         isOpen={isCreateModalOpen}
@@ -84,20 +103,6 @@ export default function LeadsTemplate({
           onSubmit={handleCreateLead}
           onCancel={() => setIsCreateModalOpen(false)}
         />
-      </Modal>
-
-      <Modal
-        isOpen={!!editingLead}
-        onClose={() => setEditingLead(null)}
-        title="Editar Lead"
-      >
-        {editingLead && (
-          <LeadForm
-            lead={editingLead}
-            onSubmit={handleUpdateLead}
-            onCancel={() => setEditingLead(null)}
-          />
-        )}
       </Modal>
 
       <ConfirmDialog

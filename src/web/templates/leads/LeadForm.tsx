@@ -1,16 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Contact, Lead, LEAD_STATUS_LABELS, LeadStatus } from "../@types";
-import { getContacts } from "../lib/api";
+import { Lead, Contact, LeadStatus, LEAD_STATUS_LABELS } from "../../@types";
+import { getContacts } from "../../lib/api";
 
 interface LeadFormProps {
   lead?: Lead;
+  isEditing?: boolean;
   onSubmit: (data: Omit<Lead, "id" | "createdAt">) => Promise<void>;
   onCancel: () => void;
 }
 
-export default function LeadForm({ lead, onSubmit, onCancel }: LeadFormProps) {
+export default function LeadForm({
+  lead,
+  isEditing = false,
+  onSubmit,
+  onCancel,
+}: LeadFormProps) {
   const [contacts, setContacts] = useState<Contact[]>([]);
   const [loadingContacts, setLoadingContacts] = useState(true);
   const [formData, setFormData] = useState({
@@ -53,10 +59,10 @@ export default function LeadForm({ lead, onSubmit, onCancel }: LeadFormProps) {
       newErrors.company = "Empresa deve ter no mínimo 2 caracteres";
     }
 
-    if (!formData.status) {
+    if (!isEditing && !formData.status) {
+      // Valida o status apenas se não estiver no modo de edição
       newErrors.status = "Status é obrigatório";
     }
-
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -175,31 +181,35 @@ export default function LeadForm({ lead, onSubmit, onCancel }: LeadFormProps) {
         )}
       </div>
 
-      <div>
-        <label
-          htmlFor="status"
-          className="block text-sm font-medium text-gray-700 mb-1"
-        >
-          Status *
-        </label>
-        <select
-          id="status"
-          value={formData.status}
-          onChange={(e) => handleChange("status", e.target.value as LeadStatus)}
-          className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
-            errors.status ? "border-red-500" : "border-gray-300"
-          }`}
-        >
-          {Object.entries(LEAD_STATUS_LABELS).map(([value, label]) => (
-            <option key={value} value={value}>
-              {label}
-            </option>
-          ))}
-        </select>
-        {errors.status && (
-          <p className="mt-1 text-sm text-red-600">{errors.status}</p>
-        )}
-      </div>
+      {!isEditing && (
+        <div>
+          <label
+            htmlFor="status"
+            className="block text-sm font-medium text-gray-700 mb-1"
+          >
+            Status *
+          </label>
+          <select
+            id="status"
+            value={formData.status}
+            onChange={(e) =>
+              handleChange("status", e.target.value as LeadStatus)
+            }
+            className={`w-full px-3 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+              errors.status ? "border-red-500" : "border-gray-300"
+            }`}
+          >
+            {Object.entries(LEAD_STATUS_LABELS).map(([value, label]) => (
+              <option key={value} value={value}>
+                {label}
+              </option>
+            ))}
+          </select>
+          {errors.status && (
+            <p className="mt-1 text-sm text-red-600">{errors.status}</p>
+          )}
+        </div>
+      )}
 
       <div className="flex justify-end gap-3 pt-4">
         <button

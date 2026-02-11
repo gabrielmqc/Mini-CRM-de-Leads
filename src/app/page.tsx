@@ -8,6 +8,7 @@ import {
   createLead,
   updateLead,
   deleteLead,
+  changeLeadStatus,
 } from "../web/lib/api";
 
 export default function LeadsPage() {
@@ -47,7 +48,19 @@ export default function LeadsPage() {
     loadData();
   };
 
-  const handleUpdateLead = async (data: Omit<Lead, "id" | "createdAt">) => {
+  const handleChangeStatus = async (leadId: string, status: LeadStatus) => {
+    try {
+      const updated = await changeLeadStatus(leadId, status);
+
+      setLeads((prev) => prev.map((l) => (l.id === leadId ? updated : l)));
+    } catch (error) {
+      console.error("Erro ao alterar status:", error);
+    }
+  };
+
+  const handleUpdateLead = async (
+    data: Omit<Lead, "id" | "createdAt" | "status">,
+  ) => {
     if (!editingLead) return;
     await updateLead(editingLead.id, data);
     setEditingLead(null);
@@ -98,6 +111,7 @@ export default function LeadsPage() {
       handleDeleteLead={handleDeleteLead}
       getContactName={getContactName}
       formatDate={formatDate}
+      handleChangeStatus={handleChangeStatus}
     />
   );
 }

@@ -122,3 +122,20 @@ export async function deleteLead(id: string): Promise<void> {
     throw new Error(error.message || "Erro ao deletar lead");
   }
 }
+export async function changeLeadStatus(
+  id: string,
+  status: LeadStatus,
+): Promise<Lead> {
+  const response = await fetch(`${API_BASE_URL}/leads/${id}/status`, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ status }),
+  });
+
+  if (!response.ok) {
+    const error = await response.json();
+    throw new Error(error.message || "Erro ao alterar status do lead");
+  }
+
+  return response.json();
+}

@@ -1,4 +1,9 @@
-import { Lead, LEAD_STATUS_LABELS, LEAD_STATUS_COLORS } from "../../@types";
+import {
+  Lead,
+  LEAD_STATUS_LABELS,
+  LEAD_STATUS_COLORS,
+  LeadStatus,
+} from "../../@types";
 
 interface LeadsTableProps {
   leads: Lead[];
@@ -7,6 +12,7 @@ interface LeadsTableProps {
   getContactName: (contactId: string) => string;
   onEdit: (lead: Lead) => void;
   onDelete: (lead: Lead) => void;
+  onChangeStatus: (leadId: string, status: LeadStatus) => void;
 }
 
 export default function LeadsTable({
@@ -16,6 +22,7 @@ export default function LeadsTable({
   getContactName,
   onEdit,
   onDelete,
+  onChangeStatus,
 }: LeadsTableProps) {
   if (loading) {
     return <div>Carregando...</div>;
@@ -72,12 +79,23 @@ export default function LeadsTable({
                   </div>
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap">
-                  <span
-                    className={`px-2 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${LEAD_STATUS_COLORS[lead.status]}`}
+                  <select
+                    value={lead.status}
+                    onChange={(e) =>
+                      onChangeStatus(lead.id, e.target.value as LeadStatus)
+                    }
+                    className={`px-2 py-1 text-xs font-semibold rounded-full border focus:outline-none focus:ring-2 focus:ring-blue-500 ${LEAD_STATUS_COLORS[lead.status]}`}
                   >
-                    {LEAD_STATUS_LABELS[lead.status]}
-                  </span>
+                    {Object.entries(LEAD_STATUS_LABELS).map(
+                      ([value, label]) => (
+                        <option key={value} value={value}>
+                          {label}
+                        </option>
+                      ),
+                    )}
+                  </select>
                 </td>
+
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                   {formatDate(lead.createdAt)}
                 </td>

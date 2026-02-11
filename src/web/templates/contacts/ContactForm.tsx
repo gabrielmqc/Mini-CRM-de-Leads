@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { Contact } from "../@types";
+import { Contact } from "../../@types";
 
 interface ContactFormProps {
   contact?: Contact;

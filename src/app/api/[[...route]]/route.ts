@@ -123,23 +123,30 @@ app.put("/leads/:id", async (c) => {
   return c.json(contact, 200);
 });
 
-app.patch("/leads/:id/:status", async (c) => {
+app.patch("/leads/:id/status", async (c) => {
   const id = c.req.param("id");
-  const status = c.req.param("status");
-  if (!status) {
-    return c.json({ error: "Missing Status" }, 400);
-  }
-  const statusParsed = z.enum(LeadStatus).safeParse(status);
-  if (!statusParsed.success) {
-    return c.json({ errors: statusParsed.error.format() }, 400);
+  if (!id) {
+    return c.json({ error: "Missing ID" }, 400);
   }
 
-  const contact = await makeChangeLeadStatus().execute({
-    id,
-    status: statusParsed.data,
+  const body = await c.req.json();
+
+  const schema = z.object({
+    status: z.enum(LeadStatus),
   });
 
-  return c.json(contact, 200);
+  const parsed = schema.safeParse(body);
+
+  if (!parsed.success) {
+    return c.json({ errors: parsed.error.format() }, 400);
+  }
+
+  const lead = await makeChangeLeadStatus().execute({
+    id,
+    status: parsed.data.status,
+  });
+
+  return c.json(lead, 200);
 });
 
 app.delete("/leads/:id", async (c) => {
