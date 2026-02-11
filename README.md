@@ -1,48 +1,75 @@
-🚀 CRM de leads
+# 🚀 Mini CRM de Leads
 
-Aplicação Full Stack desenvolvida com Next.js, utilizando Node.js 24 e Yarn como gerenciador de dependências.
+Aplicação **Full Stack** desenvolvida com **Next.js**, utilizando **Node.js 24** e **Yarn** como gerenciador de dependências.
 
-📋 Pré-requisitos
+---
 
-Antes de rodar o projeto, você precisa ter instalado:
+## 📋 Pré-requisitos
 
-Node.js 24.x
+Antes de executar o projeto, certifique-se de que possui instalado:
 
-Yarn (também funciona com outros gerenciadores de dependências)
+- **Node.js 24.x**
+- **Yarn**
+- **Git**
 
-Git
+Para verificar a versão do Node instalada:
 
-Para verificar as versões:
-
+```bash
 node -v
+```
 
-📦 Clonando o repositório
+---
+
+## 📦 Clonando o Repositório
+
+```bash
 git clone https://github.com/gabrielmqc/Mini-CRM-de-Leads.git
+cd Mini-CRM-de-Leads
+```
 
-⚙️ Instalação das dependências
+---
 
-Como o projeto foi desenvolvido com Yarn:
+## ⚙️ Instalação das Dependências
 
+O projeto utiliza **Yarn** como gerenciador de dependências:
+
+```bash
 yarn install
+```
 
+---
 
-▶️ Rodando em ambiente de desenvolvimento
+## ▶️ Executando em Ambiente de Desenvolvimento
+
+```bash
 yarn dev
-
+```
 
 A aplicação estará disponível em:
 
+```
 http://localhost:3000
+```
 
-🏗️ Build para produção
+---
+
+## 🏗️ Gerando Build para Produção
+
+```bash
 yarn build
+```
 
-🚀 Rodando em produção
+---
+
+## 🚀 Executando em Produção
+
+```bash
 yarn start
+```
 
+---
 
-📌 Observações
+## 📌 Observações Importantes
 
-Certifique-se de utilizar Node 24, pois versões anteriores podem gerar incompatibilidades.
-
-O projeto utiliza Yarn como gerenciador de dependências — evite misturar com npm.
+- Utilize **Node.js 24** para evitar problemas de compatibilidade.
+- O projeto foi configurado com **Yarn** — evite misturar com `npm` para não gerar conflitos no `lockfile`.
