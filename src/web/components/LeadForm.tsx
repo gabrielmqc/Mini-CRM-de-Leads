@@ -31,6 +31,7 @@ export default function LeadForm({ lead, onSubmit, onCancel }: LeadFormProps) {
       const data = await getContacts();
       setContacts(data);
     } catch (error) {
+      console.error(error);
       setErrors({ contacts: "Erro ao carregar contatos" });
     } finally {
       setLoadingContacts(false);
